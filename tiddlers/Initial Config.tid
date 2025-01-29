@@ -1,0 +1,11 @@
+created: 20190127041011739
+modified: 20190127041011739
+rdfstorage: http://192.168.1.134:3030/obi/
+initialConcept: obo:Process
+sparqll1: $:/linekedhealth/obil1_v3
+sparqll2: $:/linekedhealth/obil2_v3
+conceptView: $:/linekedhealth/concept_view
+title: Initial Config
+nameConcept: Process
+tmap.id: 0d030722-9064-4f15-850d-44646293c1f0
+type: text/vnd.tiddlywiki

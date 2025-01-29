@@ -1,0 +1,99 @@
+title: $:/linekedhealth/obil2_v3
+tags: $:/tags/sparql
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+
+Construct{
+      ##ConceptTW## rdfs:label ?label ;
+    	dc:title ?description ;
+  		rdfs:subClassOf ?class .
+      ?class rdfs:label ?labelClass;
+  		dc:title ?descriptionClass .
+  	  ##ConceptTW## rdfs:subClassOf ?objectFirst .
+      ?objectFirst rdfs:subClassOf ?first .
+  	  ?first rdfs:label ?labelFirst;
+  		dc:title ?descriptionFirst .
+  	  ##ConceptTW## rdfs:subClassOf ?objectOnProperty .
+      ?objectOnProperty owl:onProperty ?onProperty .
+      ?onProperty rdfs:label ?labelOnProperty;
+  		dc:title ?descriptionOnProperty .
+  	  ##ConceptTW## rdfs:subClassOf ?objectSomeValuesFrom .
+      ?objectSomeValuesFrom owl:someValuesFrom ?someValuesFrom .
+      ?someValuesFrom rdfs:label ?labelSomeValuesFrom;
+  		dc:title ?descriptionSomeValuesFrom .
+ 	  ?disjointClass owl:disjointWith ##ConceptTW## .
+      ?disjointClass rdfs:label ?labeldisjointWith;
+  		dc:title ?descriptiondisjointWith .
+      ?subClass rdfs:subClassOf ##ConceptTW## .
+      ?subClass rdfs:label ?labelSubClass;
+          dc:title ?descriptionSubClass .
+}
+WHERE {
+  GRAPH <http://purl.obolibrary.org/obo/> {
+    # Inicia desde ##ConceptTW##
+    {
+      ##ConceptTW## rdfs:label ?rawLabel;
+  		obo:IAO_0000115 ?rawDescription .
+      BIND(STR(?rawLabel) AS ?label).
+      BIND(STR(?rawDescription) AS ?description).
+    }
+    UNION
+    {
+      ##ConceptTW## rdfs:subClassOf ?class .
+      ?class rdfs:label ?rawLabelClass;
+  		obo:IAO_0000115 ?rawDescriptionClass .
+      BIND(STR(?rawLabelClass) AS ?labelClass).
+      BIND(STR(?rawDescriptionClass) AS ?descriptionClass).
+    } 
+    UNION
+    {
+      ##ConceptTW## rdfs:subClassOf/owl:intersectionOf/rdf:rest*/rdf:first ?first .
+      ##ConceptTW## rdfs:subClassOf/owl:intersectionOf/rdf:rest* ?objectFirst.
+      ?objectFirst rdf:first ?first .
+      ?first rdfs:label ?rawLabelFirst;
+  		obo:IAO_0000115 ?rawDescriptionFirst .
+      BIND(STR(?rawLabelFirst) AS ?labelFirst).
+      BIND(STR(?rawDescriptionFirst) AS ?descriptionFirst).
+    }
+    UNION
+    {
+      ##ConceptTW## rdfs:subClassOf/owl:intersectionOf/rdf:rest*/rdf:first/owl:onProperty ?onProperty .
+      ##ConceptTW## rdfs:subClassOf/owl:intersectionOf/rdf:rest*/rdf:first ?objectOnProperty. 
+      ?objectOnProperty owl:onProperty ?onProperty .
+      ?onProperty rdfs:label ?rawLabelOnProperty;
+  		obo:IAO_0000115 ?rawDescriptionOnProperty .
+      BIND(STR(?rawLabelOnProperty) AS ?labelOnProperty).
+      BIND(STR(?rawDescriptionOnProperty) AS ?descriptionOnProperty).
+    }
+    UNION
+    {
+      ##ConceptTW## rdfs:subClassOf/owl:intersectionOf/rdf:rest*/rdf:first/owl:someValuesFrom ?someValuesFrom .
+      ##ConceptTW## rdfs:subClassOf/owl:intersectionOf/rdf:rest*/rdf:first ?objectSomeValuesFrom .
+      ?objectSomeValuesFrom owl:someValuesFrom ?someValuesFrom .
+      ?someValuesFrom rdfs:label ?rawLabelSomeValuesFrom;
+  		obo:IAO_0000115 ?rawDescriptionSomeValuesFrom .
+      BIND(STR(?rawLabelSomeValuesFrom) AS ?labelSomeValuesFrom).
+      BIND(STR(?rawDescriptionSomeValuesFrom) AS ?descriptionSomeValuesFrom).
+    }
+    UNION
+    {
+      ?disjointClass owl:disjointWith ##ConceptTW## .
+      ?disjointClass rdfs:label ?rawLabeldisjointWith;
+  		obo:IAO_0000115 ?rawDescriptiondisjointWith .
+      BIND(STR(?rawLabeldisjointWith) AS ?labeldisjointWith).
+      BIND(STR(?rawDescriptiondisjointWith) AS ?descriptiondisjointWith).
+    }
+    UNION
+    {
+      ?subClass rdfs:subClassOf ##ConceptTW## .
+      ?subClass rdfs:label ?rawLabelSubClass;
+      obo:IAO_0000115 ?rawDescriptionSubClass .
+      BIND(STR(?rawLabelSubClass) AS ?labelSubClass).
+      BIND(STR(?rawDescriptionSubClass) AS ?descriptionSubClass).
+    }
+  }
+}

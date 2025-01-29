@@ -1,0 +1,19 @@
+title: $:/linekedhealth/obil1_v1
+tags: $:/tags/sparql
+
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+construct { obo:BFO_0000015 rdfs:label ?label.
+    ?concept rdfs:label ?description;
+ 	rdfs:subClassOf obo:BFO_0000015  .}
+  where{
+  GRAPH <http://purl.obolibrary.org/obo/> {
+  	obo:BFO_0000015 rdfs:label ?rawLabel.
+    BIND(STR(?rawLabel) AS ?label)
+  	?concept rdfs:label ?rawDescription;
+    BIND(STR(?rawDescription) AS ?description)
+  	?concept rdfs:subClassOf obo:BFO_0000015  .
+ }
+}

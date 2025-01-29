@@ -1,0 +1,62 @@
+title: $:/linekedhealth/obil2_v2
+tags: $:/tags/sparql
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+construct { ##ConceptTW## rdfs:label ?label ;
+    	rdfs:comment ?description ;
+    	rdfs:subClassOf ?subclassof ;
+  		rdfs:subClassOf ?subclassList .
+  	?subclass rdfs:subClassOf ##ConceptTW## ;
+    	rdfs:label ?subclassLabel;
+   		rdfs:comment ?subclassdefinition.
+   ?subclassof rdfs:label ?subclassofLabel;
+    	rdfs:comment ?subclassofdefinition.
+	?list owl:someValuesFrom ##ConceptTW## ;
+         owl:onProperty ?listproperty ;
+      		?pplist ?vvlist .
+  	?listproperty rdfs:label ?listpropertylabel ;
+    	rdfs:comment ?listpropertydescription .
+  	?conceptlist rdfs:subClassOf ?list ;
+    	rdfs:label ?conceptlistpropertylabel;
+        rdfs:comment ?conceptlistpropertydescription .
+    ?subclassList owl:onProperty ?subclasslistproperty ;
+      		?subclassprop ?subclassListval .
+    ?subclasslistproperty rdfs:label ?subclasslistpropertylabel;
+        rdfs:comment ?subclasslistpropertydescription .
+    ?subclassListval rdfs:label ?subclasslistlabel;
+        rdfs:comment ?subclasslistdescription .
+	}
+  where{
+  GRAPH <http://purl.obolibrary.org/obo/> {
+  	##ConceptTW## rdfs:label ?label;
+        obo:IAO_0000115 ?description ;
+        rdfs:subClassOf ?subclassof ;
+  		rdfs:subClassOf ?subclassList .
+    ?subclassof  rdfs:label ?subclassofLabel;
+    	obo:IAO_0000115 ?subclassofdefinition.
+    ?subclass rdfs:subClassOf ##ConceptTW## ;
+        rdfs:label ?subclassLabel;
+    	obo:IAO_0000115 ?subclassdefinition.
+    ?list owl:someValuesFrom ##ConceptTW##;
+    		owl:onProperty ?listproperty ;
+      		?pplist ?vvlist .    
+    ?listproperty rdfs:label ?listpropertylabel;
+        obo:IAO_0000115 ?listpropertydescription .
+    Optional { ?conceptlist rdfs:subClassOf ?list ;
+    	rdfs:label ?conceptlistpropertylabel;
+     obo:IAO_0000115 ?conceptlistpropertydescription ; }
+    ?subclassList owl:onProperty ?subclasslistproperty ;
+      		?subclassprop ?subclassListval .
+    ?subclasslistproperty rdfs:label ?subclasslistpropertylabel;
+        obo:IAO_0000115 ?subclasslistpropertydescription .
+    ?subclassListval rdfs:label ?subclasslistlabel;
+        obo:IAO_0000115 ?subclasslistdescription .
+    
+    
+  }
+}
